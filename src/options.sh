@@ -27,8 +27,33 @@ configoptions="\
 --enable-sqlite-utf8 \
 --enable-wddx \
 --enable-zip \
+--enable-fastcgi \
+--enable-fpm \
+--enable-sockets \
+--enable-sysvsem \
+--enable-sysvshm \
+--enable-json \
+--enable-libxml \
+--enable-gd-native-ttf \
+--with-mcrypt \
+--with-curl \
 --with-zlib \
+--with-xmlrpc \
+--with-openssl \
 --with-gettext \
+--with-bz2 \
+--with-pcre-regex \
+--with-mhash \
+--with-mysql \
+--with-mysqli \
+--with-pdo-mysql \
+--with-pear \
+--with-gd \
+--with-jpeg-dir \
+--with-png-dir \
+--with-vpx-dir \
+--with-freetype-dir \
+--with-gmp \
 $gcov"
 
 echo $version $vmajor $vminor $vpatch
