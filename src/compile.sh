@@ -110,10 +110,10 @@ source 'options.sh' "$version" "$vmajor" "$vminor" "$vpatch"
 cd "$srcdir"
 #configuring
 #TODO: do not configure when config.nice exists
+# --enable-debug \
 ./configure \
  --prefix="$instdir" \
  --exec-prefix="$instdir" \
- --enable-debug \
  --disable-short-tags \
  --without-pear \
  $configoptions
