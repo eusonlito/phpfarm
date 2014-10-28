@@ -1,4 +1,4 @@
 #!/bin/bash
 
-#./compile.sh 5.4.31
-./compile.sh 5.4.32
+ver="5.4.34"
+./compile.sh $ver

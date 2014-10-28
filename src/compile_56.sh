@@ -1,4 +1,4 @@
 #!/bin/bash
 
-#./compile.sh 5.6.0RC3
-./compile.sh 5.6.0
+ver="5.6.2"
+./compile.sh $ver
