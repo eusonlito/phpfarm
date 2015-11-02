@@ -45,5 +45,3 @@ Do not try to change ``prefix`` and ``exec-prefix``.
 - ``custom-php-5.ini``
 - ``custom-php-5.6.ini``
 - ``custom-php-5.6.14.ini``
-
-You need to have ``inst/current-bin`` in your ``$PATH`` to make this work.
