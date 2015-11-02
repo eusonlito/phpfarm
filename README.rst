@@ -15,9 +15,9 @@ If a file cannot be found, try to fetch it manually and put it into
 Setup
 -----
 - Check out phpfarm from git:
-  ``git clone git://git.code.sf.net/p/phpfarm/code phpfarm``
+  ``git clone git@github.com:yfix/phpfarm.git phpfarm``
 - ``cd phpfarm/src/``
-- ``./compile.sh 5.3.0``
+- ``./compile.sh 5.6.14``
 - PHP gets installed into ``phpfarm/inst/php-$version/``
 - ``phpfarm/inst/bin/php-$version`` is also executable.
   You should add ``inst/bin`` to your ``$PATH``, i.e.
@@ -32,8 +32,8 @@ You may create version-specific custom option files:
 
 - ``custom-options.sh``
 - ``custom-options-5.sh``
-- ``custom-options-5.3.sh``
-- ``custom-options-5.3.1.sh``
+- ``custom-options-5.6.sh``
+- ``custom-options-5.6.14.sh``
 
 The shell script needs to define a variable "``$configoptions``" with
 all ``./configure`` options.
@@ -43,35 +43,7 @@ Do not try to change ``prefix`` and ``exec-prefix``.
 
 - ``custom-php.ini``
 - ``custom-php-5.ini``
-- ``custom-php-5.3.ini``
-- ``custom-php-5.3.1.ini``
-
-
-Switching default PHP versions
-------------------------------
-Using the command ``switch-phpfarm``, you can make one of the installed
-PHP versions the default one that gets run when just typing ``php``::
-
-    $ switch-phpfarm
-    Switch the currently active PHP version of phpfarm
-    Available versions:
-     5.2.17
-     5.3.16
-     5.4.6
-    $ switch-phpfarm 5.4.6
-    Setting active PHP version to 5.4.6
-    PHP 5.4.6 (cli) (built: Sep 13 2012 11:24:56) (DEBUG)
+- ``custom-php-5.6.ini``
+- ``custom-php-5.6.14.ini``
 
 You need to have ``inst/current-bin`` in your ``$PATH`` to make this work.
-
-
-
-About phpfarm
--------------
-Written by Christian Weiske, cweiske@cweiske.de
-
-Homepage: https://sourceforge.net/p/phpfarm
-
-Licensed under the `AGPL v3`__ or later.
-
-__ http://www.gnu.org/licenses/agpl
