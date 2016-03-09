@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ver="7.0.0"
+ver="7.0.4"
 (
 mkdir ./php-$ver
 cd ./php-$ver
