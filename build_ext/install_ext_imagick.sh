@@ -7,7 +7,10 @@ for version in $(cat ./versions.txt); do
 	git clone https://github.com/mkoppanen/imagick.git ./php-imagick
 	cd ./php-imagick && git checkout phpseven
 
-	( phpize-$version && ./configure --with-php-config=/opt/phpfarm/inst/bin/php-config-$version && make && make install && make clean )
-#  echo 'extension=imagick.so' > /etc/php/conf.d/imagick.ini \
+	(
+		phpize-$version && ./configure --with-php-config=/opt/phpfarm/inst/bin/php-config-$version \
+		&& make && make install && make clean \
+		&& echo 'extension=imagick.so' >> /opt/phpfarm/inst/php-$version/lib/php.ini
+	)
 )
 done
