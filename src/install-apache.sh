@@ -44,7 +44,7 @@ if [ ! -f "/etc/apache2/conf-available/phpfarm.conf" ]; then
     cd "$here"
 fi
 
-if [ "$(grep "php-cgi-$verion" /etc/apache2/conf-available/phpfarm.conf)" == "" ]; then
+if [ "$(grep "php-cgi-$version" /etc/apache2/conf-available/phpfarm.conf)" == "" ]; then
     echo "FastCGIServer /var/www/cgi-bin/php-cgi-$version -idle-timeout 5000" >> /etc/apache2/conf-available/phpfarm.conf
 fi
 
