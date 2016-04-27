@@ -56,7 +56,7 @@ fi
 
 cat "$here/templates/apache-php.conf" | sed "s/VERSION/$version/g" > "/etc/apache2/cgi-servers/php-$version.conf"
 
-echo -e "\nAdd this line to Virtualhost configuration"
+echo -e "\nAdd this line to VirtualHost configuration"
 echo -e "\nInclude /etc/apache2/cgi-servers/php-$version.conf"
 echo -e "\nAnd restart Apache"
 

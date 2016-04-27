@@ -69,3 +69,20 @@ Use `compile-old.sh`
 
 - ``cd phpfarm/src/``
 - ``./compile-old.sh 5.3.29``
+
+Apache auto-configuration
+-------------------------
+
+You can execute this command after PHP compilation.
+
+- ``cd phpfarm/src/``
+- ``./install-apache.sh 5.3.29``
+
+Will create:
+
+* /var/www/cgi-bin/ folder with /var/www/cgi-bin/php-cgi-$version wrapper
+* /etc/php5/cgi/$version/php.ini configuration file
+* /etc/apache2/conf-available/phpfarm.conf apache phpfarm configuration
+* /etc/apache2/cgi-servers/php-$version.conf VirtualHost configuration
+
+Finally you only need to add a `Include /etc/apache2/cgi-servers/php-$version.conf` to your VirtualHost configuration.
