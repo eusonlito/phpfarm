@@ -1,0 +1,8 @@
+#!/bin/sh
+
+export PHPRC="/etc/php5/cgi/VERSION/"
+export PHP_FCGI_CHILDREN=3
+export PHP_FCGI_MAX_REQUESTS=5000
+export PHP_FCGI_IDLE_TIMEOUT=5000
+
+exec /opt/phpfarm/inst/bin/php-cgi-VERSION
