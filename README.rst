@@ -15,7 +15,7 @@ If a file cannot be found, try to fetch it manually and put it into
 Setup
 -----
 - Check out phpfarm from git:
-  ``git clone git@github.com:yfix/phpfarm.git phpfarm``
+  ``git clone git@github.com:eusonlito/phpfarm.git phpfarm``
 - ``cd phpfarm/src/``
 - ``./compile.sh 5.6.14``
 - PHP gets installed into ``phpfarm/inst/php-$version/``
@@ -24,6 +24,11 @@ Setup
   ``PATH="$PATH:$HOME/phpfarm/inst/bin"`` in ``.bashrc``,
   as well as ``inst/current-bin``.
 
+Discover Last PHP version
+-------------------------
+
+- ``cd phpfarm/src/``
+- ``./compile-last.sh 5.6``
 
 Customization
 -------------
@@ -45,3 +50,22 @@ Do not try to change ``prefix`` and ``exec-prefix``.
 - ``custom-php-5.ini``
 - ``custom-php-5.6.ini``
 - ``custom-php-5.6.14.ini``
+
+Problems with old versions
+--------------------------
+
+Compile PHP old version and fails with:
+
+```
+/usr/bin/ld: ext/openssl/openssl.o: undefined reference to symbol 'SSL_get_verify_result@@OPENSSL_1.0.0'
+//lib/x86_64-linux-gnu/libssl.so.1.0.0: error adding symbols: DSO missing from command line
+collect2: error: ld returned 1 exit status
+Makefile:258: recipe for target 'sapi/cgi/php-cgi' failed
+make: *** [sapi/cgi/php-cgi] Error 1
+make failed.
+```
+
+Use `compile-old.sh`
+
+- ``cd phpfarm/src/``
+- ``./compile-old.sh 5.3.29``
