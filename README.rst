@@ -80,9 +80,9 @@ You can execute this command after PHP compilation.
 
 Will create:
 
-* /var/www/cgi-bin/ folder with /var/www/cgi-bin/php-cgi-$version wrapper
-* /etc/php5/cgi/$version/php.ini configuration file
-* /etc/apache2/conf-available/phpfarm.conf apache phpfarm configuration
-* /etc/apache2/cgi-servers/php-$version.conf VirtualHost configuration
+* ``/var/www/cgi-bin/`` folder with ``/var/www/cgi-bin/php-cgi-$version`` wrapper
+* ``/etc/php5/cgi/$version/php.ini`` configuration file
+* ``/etc/apache2/conf-available/phpfarm.conf`` apache phpfarm configuration
+* ``/etc/apache2/cgi-servers/php-$version.conf`` VirtualHost configuration
 
 Finally you only need to add a `Include /etc/apache2/cgi-servers/php-$version.conf` to your VirtualHost configuration.
