@@ -30,6 +30,12 @@ Discover Last PHP version
 - ``cd phpfarm/src/``
 - ``./compile-last.sh 5.6``
 
+will returns:
+
+``
+Last version from PHP releases website is 5.6.19 - Install it? [y/n]
+``
+
 Customization
 -------------
 Default configuration options are in ``src/options.sh``.
