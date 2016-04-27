@@ -32,9 +32,9 @@ Discover Last PHP version
 
 will returns:
 
-``
+```
 Last version from PHP releases website is 5.6.19 - Install it? [y/n]
-``
+```
 
 Customization
 -------------
