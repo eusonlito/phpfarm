@@ -35,7 +35,7 @@ cp -p "/opt/phpfarm/inst/php-$version/lib/php.ini" "/etc/php5/cgi/$version/"
 echo -e "\nConfiguring Apache /etc/apache2/conf-available/phpfarm.conf"
 
 if [ ! -f "/etc/apache2/conf-available/phpfarm.conf" ]; then
-    cp "$here/templates/apache-phpfarm.conf" > "/etc/apache2/conf-available/phpfarm.conf"
+    cp "$here/templates/apache-phpfarm.conf" "/etc/apache2/conf-available/phpfarm.conf"
 
     cd /etc/apache2/conf-enabled
 
