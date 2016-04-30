@@ -98,103 +98,99 @@ Compilation errors
 
 Ubuntu 14.04 common libraries missing.
 
-```
+    configure: error: Cannot find MySQL header files under /usr/local/mysql.
 
-configure: error: Cannot find MySQL header files under /usr/local/mysql.
+    $> apt-get install -y libmysqlclient-dev
 
-$> apt-get install -y libmysqlclient-dev
+    configure: error: Please reinstall the BZip2 distribution
 
-configure: error: Please reinstall the BZip2 distribution
+    $> apt-get install -y libbz2-dev
 
-$> apt-get install -y libbz2-dev
+    configure: error: xml2-config not found. Please check your libxml2 installation.
 
-configure: error: xml2-config not found. Please check your libxml2 installation.
+    $> apt-get install -y libxml2-dev
 
-$> apt-get install -y libxml2-dev
+    configure: error: bison is required to build PHP/Zend when building a GIT checkout!
 
-configure: error: bison is required to build PHP/Zend when building a GIT checkout!
+    $> apt-get install -y bison
 
-$> apt-get install -y bison
+    configure: error: Cannot find OpenSSL's
 
-configure: error: Cannot find OpenSSL's
+    $> apt-get install -y libssl-dev
 
-$> apt-get install -y libssl-dev
+    configure: error: Cannot find OpenSSL's libraries
 
-configure: error: Cannot find OpenSSL's libraries
+    $> apt-get install -y libssl-dev
 
-$> apt-get install -y libssl-dev
+    configure: error: Please reinstall the libcurl distribution easy.h should be in /include/curl/
 
-configure: error: Please reinstall the libcurl distribution easy.h should be in /include/curl/
+    $> apt-get install -y libcurl4-openssl-dev
 
-$> apt-get install -y libcurl4-openssl-dev
+    configure: error: jpeglib.h not found.
 
-configure: error: jpeglib.h not found.
+    $> apt-get install -y libjpeg-dev
 
-$> apt-get install -y libjpeg-dev
+    configure: error: png.h not found.
 
-configure: error: png.h not found.
+    $> apt-get install -y libpng12-dev
 
-$> apt-get install -y libpng12-dev
+    configure: error: freetype-config not found.
 
-configure: error: freetype-config not found.
+    $> apt-get install -y libfreetype6-dev
 
-$> apt-get install -y libfreetype6-dev
+    configure: error: mcrypt.h not found. Please reinstall libmcrypt.
 
-configure: error: mcrypt.h not found. Please reinstall libmcrypt.
+    $> apt-get install -y libmcrypt-dev
 
-$> apt-get install -y libmcrypt-dev
+    configure: error: Cannot find pspell
 
-configure: error: Cannot find pspell
+    $> apt-get install -y libpspell-dev
 
-$> apt-get install -y libpspell-dev
+    configure: error: Can not find recode.h anywhere under /usr /usr/local /usr /opt.
 
-configure: error: Can not find recode.h anywhere under /usr /usr/local /usr /opt.
+    $> apt-get install -y librecode-dev
 
-$> apt-get install -y librecode-dev
+    configure: error: xslt-config not found. Please reinstall the libxslt >= 1.1.0 distribution
 
-configure: error: xslt-config not found. Please reinstall the libxslt >= 1.1.0 distribution
+    $> apt-get install -y libxslt-dev
 
-$> apt-get install -y libxslt-dev
+    configure: error: Cannot find libpq-fe.h. Please specify correct PostgreSQL installation path
 
-configure: error: Cannot find libpq-fe.h. Please specify correct PostgreSQL installation path
+    # If you haven't PostgreSQL, remove --with-pdo-pgsql and --with-pgsql lines
 
-# If you haven't PostgreSQL, remove --with-pdo-pgsql and --with-pgsql lines
+    configure: error: could not find pcre.h in /usr
 
-configure: error: could not find pcre.h in /usr
+    $> apt-get install -y libpcre3-dev
 
-$> apt-get install -y libpcre3-dev
+    configure: error: libjpeg.(a|so) not found.
 
-configure: error: libjpeg.(a|so) not found.
+    $> apt-get install -y libjpeg-dev
 
-$> apt-get install -y libjpeg-dev
+    configure: error: libxpm.(a|so) not found.
 
-configure: error: libxpm.(a|so) not found.
+    $> apt-get install -y libxpm-dev
 
-$> apt-get install -y libxpm-dev
+    configure: error: unable to locate gmp.h
 
-configure: error: unable to locate gmp.h
+    $> apt-get install -y libgmp-dev
+    $> ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
 
-$> apt-get install -y libgmp-dev
-$> ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
+    configure: error: sasl.h not found!
 
-configure: error: sasl.h not found!
+    $> apt-get install -y libsasl2-dev
 
-$> apt-get install -y libsasl2-dev
+    configure: error: please reinstall libmhash - i cannot find mhash.h
 
-configure: error: please reinstall libmhash - i cannot find mhash.h
+    $> apt-get install -f libmhash-dev
 
-$> apt-get install -f libmhash-dev
+    configure: error: directory /usr is not a freetds installation directory
 
-configure: error: directory /usr is not a freetds installation directory
+    $> apt-get install -f freetds-dev
 
-$> apt-get install -f freetds-dev
+    configure: error: cannot find pspell
 
-configure: error: cannot find pspell
+    $> apt-get install libpspell-dev
 
-$> apt-get install libpspell-dev
+    configure: error: cannot find libtidy
 
-configure: error: cannot find libtidy
-
-$> apt-get install libtidy-dev
-
-```
+    $> apt-get install libtidy-dev
