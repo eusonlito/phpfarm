@@ -99,6 +99,7 @@ Compilation errors
 Ubuntu 14.04 common libraries missing.
 
 ```
+
 configure: error: Cannot find MySQL header files under /usr/local/mysql.
 
 $> apt-get install -y libmysqlclient-dev
@@ -195,4 +196,5 @@ $> apt-get install libpspell-dev
 configure: error: cannot find libtidy
 
 $> apt-get install libtidy-dev
+
 ```
