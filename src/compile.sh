@@ -26,24 +26,24 @@
 #
 
 version=$1
-vmajor=`echo ${version%%.*}`
-vminor=`echo ${version%.*}`
-vminor=`echo ${vminor#*.}`
-vpatch=`echo ${version##*.}`
-vcomp=`printf "%02d%02d%02d\n" $vmajor $vminor $vpatch`
+vmajor=$(echo ${version%%.*})
+vminor=$(echo ${version%.*})
+vminor=$(echo ${vminor#*.})
+vpatch=$(echo ${version##*.})
+vcomp=$(printf "%02d%02d%02d\n" $vmajor $vminor $vpatch)
 
 #directory of this file. all php srces are extrated in it
-basedir="`dirname "$0"`"
+basedir="$(dirname "$0")"
 
 cd "$basedir"
 
-basedir=`pwd`
+basedir=$(pwd)
 #directory of php sources of specific version
 srcdir="php-$version"
 #directory with source archives
 bzipsdir='bzips'
 #directory phps get installed into
-instbasedir="`readlink -f "$basedir/../inst"`"
+instbasedir="$(readlink -f "$basedir/../inst")"
 #directory this specific version gets installed into
 instdir="$instbasedir/php-$version"
 #directory where all bins are symlinked
@@ -122,7 +122,7 @@ if [ ! -d "$srcdir" ]; then
     tar xjf "$srcfile"
 fi
 
-source 'options.sh' "$version" "$vmajor" "$vminor" "$vpatch"
+source 'options.sh' "$version" "$vmajor" "$vminor" "$vpatch" "$instdir"
 cd "$srcdir"
 
 #configuring
@@ -164,6 +164,12 @@ fi
 #you can define your own ini target directory by setting $initarget
 if [ "x$initarget" = x ]; then
     initarget="$instdir/lib/php.ini"
+fi
+
+initarget_dir=$(dirname "$initarget")
+
+if [ ! -d "$initarget_dir" ] && ! mkdir -p -m 755 "$initarget_dir"; then
+    echo "Warning: failed to created directory $initarget_dir."
 fi
 
 if [ -f "php.ini-development" ]; then
@@ -266,5 +272,5 @@ ln -fs "$instdir/bin/phpize" "$shbindir/phpize-$version"
 if [ $vmajor -gt 5 ] || [ $vmajor -eq 5 -a $vminor -gt 2 ]; then
     cd "$basedir"
 
-    ./pyrus.sh "$version" "$instdir"
+    ./pyrus.sh "$version" "$instdir" "$initarget"
 fi

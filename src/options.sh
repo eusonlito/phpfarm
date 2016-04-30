@@ -13,6 +13,7 @@ version=$1
 vmajor=$2
 vminor=$3
 vpatch=$4
+instdir=$5
 
 #gcov='--enable-gcov'
 configoptions="\
@@ -56,13 +57,20 @@ configoptions="\
 --with-gmp \
 $gcov"
 
-echo $version $vmajor $vminor $vpatch
+echo $version $vmajor $vminor $vpatch $instdir
 
 custom="custom-options.sh"
-[ -f $custom ] && source "$custom" $version $vmajor $vminor $vpatch
+
+[ -f $custom ] && source "$custom" $version $vmajor $vminor $vpatch $instdir
+
 custom="custom-options-$vmajor.sh"
-[ -f $custom ] && source "$custom" $version $vmajor $vminor $vpatch
+
+[ -f $custom ] && source "$custom" $version $vmajor $vminor $vpatch $instdir
+
 custom="custom-options-$vmajor.$vminor.sh"
-[ -f $custom ] && source "$custom" $version $vmajor $vminor $vpatch
+
+[ -f $custom ] && source "$custom" $version $vmajor $vminor $vpatch $instdir
+
 custom="custom-options-$vmajor.$vminor.$vpatch.sh"
-[ -f $custom ] && source "$custom" $version $vmajor $vminor $vpatch
+
+[ -f $custom ] && source "$custom" $version $vmajor $vminor $vpatch $instdir
