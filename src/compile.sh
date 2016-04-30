@@ -34,7 +34,9 @@ vcomp=`printf "%02d%02d%02d\n" $vmajor $vminor $vpatch`
 
 #directory of this file. all php srces are extrated in it
 basedir="`dirname "$0"`"
+
 cd "$basedir"
+
 basedir=`pwd`
 #directory of php sources of specific version
 srcdir="php-$version"
@@ -56,19 +58,27 @@ fi
 #already extracted?
 if [ ! -d "$srcdir" ]; then
     echo 'Source directory does not exist; trying to extract'
+
     srcfile="$bzipsdir/php-$version.tar.bz2"
+
     if [ ! -f "$srcfile" ]; then
         echo 'Source file not found:'
         echo "$srcfile"
+
         url="http://museum.php.net/php$vmajor/php-$version.tar.bz2"
-        wget -P "$bzipsdir" "$url"
+
+        wget -q -P "$bzipsdir" "$url"
+
         if [ ! -f "$srcfile" ]; then
             echo "Fetching sources from museum failed"
             echo $url
+
             #museum failed, now we try real download
             url="http://www.php.net/get/php-$version.tar.bz2/from/this/mirror"
-            wget -P "$bzipsdir" -O "$srcfile" "$url"
+
+            wget -q -P "$bzipsdir" -O "$srcfile" "$url"
         fi
+
         if [ ! -s "$srcfile" -a -f "$srcfile" ]; then
             rm "$srcfile"
         fi
@@ -76,10 +86,13 @@ if [ ! -d "$srcdir" ]; then
         if [ ! -f "$srcfile" ]; then
             echo "Fetching sources from official download site failed"
             echo $url
+
             #use ilia's RC (5.3.x)
             url="https://downloads.php.net/ilia/php-$version.tar.bz2"
-            wget -P "$bzipsdir" -O "$srcfile" "$url"
+
+            wget -q -P "$bzipsdir" -O "$srcfile" "$url"
         fi
+
         if [ ! -s "$srcfile" -a -f "$srcfile" ]; then
             rm "$srcfile"
         fi
@@ -87,10 +100,13 @@ if [ ! -d "$srcdir" ]; then
         if [ ! -f "$srcfile" ]; then
             echo "Fetching sources from ilia's site failed"
             echo $url
+
             #use stas's RC (5.4.x)
             url="https://downloads.php.net/stas/php-$version.tar.bz2"
-            wget -P "$bzipsdir" -O "$srcfile" "$url"
+
+            wget -q -P "$bzipsdir" -O "$srcfile" "$url"
         fi
+
         if [ ! -s "$srcfile" -a -f "$srcfile" ]; then
             rm "$srcfile"
         fi
@@ -101,37 +117,44 @@ if [ ! -d "$srcdir" ]; then
             exit 2
         fi
     fi
-    #extract
-    tar xjvf "$srcfile"
-fi
 
+    #extract
+    tar xjf "$srcfile"
+fi
 
 source 'options.sh' "$version" "$vmajor" "$vminor" "$vpatch"
 cd "$srcdir"
+
 #configuring
 #TODO: do not configure when config.nice exists
 # --enable-debug \
 ./configure \
- --prefix="$instdir" \
- --exec-prefix="$instdir" \
- --disable-short-tags \
- --without-pear \
- $configoptions
+    --prefix="$instdir" \
+    --exec-prefix="$instdir" \
+    --disable-short-tags \
+    --enable-debug \
+    --without-pear \
+    $configoptions
 
 if [ $? -gt 0 ]; then
     echo configure.sh failed.
     exit 3
 fi
 
-#compile sources
-#make clean
-make
+echo "compile sources..."
+
+make -s clean
+make -s
+
 if [ "$?" -gt 0 ]; then
     echo make failed.
     exit 4
 fi
 
-make install
+echo "installing..."
+
+make -s install
+
 if [ "$?" -gt 0 ]; then
     echo make install failed.
     exit 5
@@ -142,6 +165,7 @@ fi
 if [ "x$initarget" = x ]; then
     initarget="$instdir/lib/php.ini"
 fi
+
 if [ -f "php.ini-development" ]; then
     #php 5.3
     cp "php.ini-development" "$initarget"
@@ -152,34 +176,46 @@ else
     echo "No php.ini file found."
     echo "Please copy it manually to $instdir/lib/php.ini"
 fi
+
 #set default ini values
 cd "$basedir"
+
 if [ -f "$initarget" ]; then
     #fixme: make the options unique or so
     custom="custom-php.ini"
+
     [ ! -f $custom ] && cp "default-custom-php.ini" "$custom"
 
     versionreplace="s/\$version/$version/"
+
     [ -f $custom ] && cat "$custom" | sed $versionreplace >> "$initarget"
+
     custom="custom-php-$vmajor.ini"
+
     [ -f $custom ] && cat "$custom" | sed $versionreplace >> "$initarget"
+
     custom="custom-php-$vmajor.$vminor.ini"
+
     [ -f $custom ] && cat "$custom" | sed $versionreplace >> "$initarget"
+
     custom="custom-php-$vmajor.$vminor.$vpatch.ini"
+
     [ -f $custom ] && cat "$custom" | sed $versionreplace >> "$initarget"
 fi
 
 #create bin
 [ ! -d "$shbindir" ] && mkdir "$shbindir"
+
 if [ ! -d "$shbindir" ]; then
     echo "Cannot create shared bin dir"
     exit 6
 fi
-#symlink all files
 
+#symlink all files
 #php may be called php.gcno
 bphp="$instdir/bin/php"
 bphpgcno="$instdir/bin/php.gcno"
+
 if [ -f "$bphp" ]; then
     ln -fs "$bphp" "$shbindir/php-$version"
 elif [ -f "$bphpgcno" ]; then
@@ -192,13 +228,36 @@ fi
 #php-cgi may be called php.gcno
 bphpcgi="$instdir/bin/php-cgi"
 bphpcgigcno="$instdir/bin/php-cgi.gcno"
+
 if [ -f "$bphpcgi" ]; then
     ln -fs "$bphpcgi" "$shbindir/php-cgi-$version"
 elif [ -f "$bphpcgigcno" ]; then
     ln -fs "$bphpcgigcno" "$shbindir/php-cgi-$version"
 else
     echo "no php-cgi binary found"
-    exit 8
+fi
+
+#php-fpm may be called php-fpm.gcno or php-fpm.dSYM (Mac OS X)
+bphpfpm="$instdir/sbin/php-fpm"
+bphpfpmgcno="$instdir/sbin/php-fpm.gcno"
+bphpfpmdsym="$instdir/sbin/php-fpm.dSYM"
+
+if [ -f "$bphpfpmgcno" ]; then
+    mv "$bphpfpmgcno" "$bphpfpm"
+elif [ -f "$bphpfpmdsym" ]; then
+    mv "$bphpfpmdsym" "$bphpfpm"
+fi
+
+if [ -f "$bphpfpm" ]; then
+    ln -fs "$bphpfpm" "$shbindir/php-fpm-$version"
+else
+    echo "no php-fpm binary found"
+fi
+
+bpecl="$instdir/bin/pecl"
+
+if [ -f "$bpecl" ]; then
+    ln -fs "$bpecl" "$shbindir/pecl-$version"
 fi
 
 ln -fs "$instdir/bin/php-config" "$shbindir/php-config-$version"
@@ -206,5 +265,6 @@ ln -fs "$instdir/bin/phpize" "$shbindir/phpize-$version"
 
 if [ $vmajor -gt 5 ] || [ $vmajor -eq 5 -a $vminor -gt 2 ]; then
     cd "$basedir"
+
     ./pyrus.sh "$version" "$instdir"
 fi
