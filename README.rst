@@ -63,10 +63,15 @@ Problems with old versions
 Compile PHP old version and fails with:
 
     /usr/bin/ld: ext/openssl/openssl.o: undefined reference to symbol 'SSL_get_verify_result@@OPENSSL_1.0.0'
+
     //lib/x86_64-linux-gnu/libssl.so.1.0.0: error adding symbols: DSO missing from command line
+
     collect2: error: ld returned 1 exit status
+
     Makefile:258: recipe for target 'sapi/cgi/php-cgi' failed
+
     make: *** [sapi/cgi/php-cgi] Error 1
+
     make failed.
 
 Use `compile-old.sh`
