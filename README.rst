@@ -109,6 +109,10 @@ Ubuntu 14.04 common libraries missing.
 
     $> apt-get install -y libbz2-dev
 
+    configure: error: Unable to detect ICU prefix or no failed. Please verify ICU install prefix and make sure icu-config works.
+
+    $> apt-get install -y libicu-dev
+
     configure: error: xml2-config not found. Please check your libxml2 installation.
 
     $> apt-get install -y libxml2-dev
@@ -184,16 +188,16 @@ Ubuntu 14.04 common libraries missing.
 
     configure: error: please reinstall libmhash - i cannot find mhash.h
 
-    $> apt-get install -f libmhash-dev
+    $> apt-get install -y libmhash-dev
 
     configure: error: directory /usr is not a freetds installation directory
 
-    $> apt-get install -f freetds-dev
+    $> apt-get install -y freetds-dev
 
     configure: error: cannot find pspell
 
-    $> apt-get install libpspell-dev
+    $> apt-get install -y libpspell-dev
 
     configure: error: cannot find libtidy
 
-    $> apt-get install libtidy-dev
+    $> apt-get install -y libtidy-dev
