@@ -12,7 +12,14 @@ if [ ! -d "../inst/php-$version" ]; then
     exit 1
 fi
 
-here="$(pwd)"
+#current location
+basedir="$(pwd)"
+#directory phps get installed into
+instbasedir="$(readlink -f "$basedir/../inst")"
+#directory this specific version gets installed into
+instdir="$instbasedir/php-$version"
+#directory where config are setup
+etcdir="/etc/php/$version"
 
 echo -e "\nInstalling cgi-bin wrapper in /var/www/cgi-bin/php-cgi-$version"
 
@@ -20,28 +27,28 @@ if [ ! -d /var/www/cgi-bin/ ]; then
     install -d /var/www/cgi-bin/
 fi
 
-cat "$here/templates/php-cgi" | sed "s/VERSION/$version/g" > "/var/www/cgi-bin/php-cgi-$version"
+cat "$basedir/templates/php-cgi" | sed "s/VERSION/$version/g" > "/var/www/cgi-bin/php-cgi-$version"
 
 chmod 755 "/var/www/cgi-bin/php-cgi-$version"
 
-echo -e "\nInstalling php.ini in /etc/php5/cgi/$version/"
+echo -e "\nInstalling php.ini in $etcdir/cgi/"
 
-if [ ! -d "/etc/php5/cgi/$version/" ]; then
-    install -d "/etc/php5/cgi/$version/"
+if [ ! -d "$etcdir/cgi/" ]; then
+    install -d "$etcdir/cgi/"
 fi
 
-cp -p "/opt/phpfarm/inst/php-$version/lib/php.ini" "/etc/php5/cgi/$version/"
+cp -p "$instdir/lib/php.ini" "$etcdir/cgi/"
 
 echo -e "\nConfiguring Apache /etc/apache2/conf-available/phpfarm.conf"
 
 if [ ! -f "/etc/apache2/conf-available/phpfarm.conf" ]; then
-    cp "$here/templates/apache-phpfarm.conf" "/etc/apache2/conf-available/phpfarm.conf"
+    cp "$basedir/templates/apache-phpfarm.conf" "/etc/apache2/conf-available/phpfarm.conf"
 
     cd /etc/apache2/conf-enabled
 
     ln -s ../conf-available/phpfarm.conf .
 
-    cd "$here"
+    cd "$basedir"
 fi
 
 if [ "$(grep "php-cgi-$version" /etc/apache2/conf-available/phpfarm.conf)" == "" ]; then
@@ -54,7 +61,7 @@ if [ ! -d /etc/apache2/cgi-servers/ ]; then
     install -d /etc/apache2/cgi-servers/
 fi
 
-cat "$here/templates/apache-php.conf" | sed "s/VERSION/$version/g" > "/etc/apache2/cgi-servers/php-$version.conf"
+cat "$basedir/templates/apache-php.conf" | sed "s/VERSION/$version/g" > "/etc/apache2/cgi-servers/php-$version.conf"
 
 echo -e "\nAdd this line to VirtualHost configuration"
 echo -e "\nInclude /etc/apache2/cgi-servers/php-$version.conf"
