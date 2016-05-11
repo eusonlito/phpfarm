@@ -37,15 +37,17 @@ cat "$instdir/etc/php-fpm.conf.default" \
     | sed "s#;error_log = log/php-fpm.log#error_log = $instdir/var/log/php-fpm.log#" \
     > "$etcdir/php-fpm.conf"
 
-for i in $(ls "$instdir/etc/php-fpm.d/"*.default); do
-    echo -e "\nCopy $i file to $etcdir/php-fpm.d/"
+if [ -d "$instdir/etc/php-fpm.d" ]; then
+    for i in $(ls "$instdir/etc/php-fpm.d/"*.default); do
+        echo -e "\nCopy $i file to $etcdir/php-fpm.d/"
 
-    cat "$i" \
-        | sed "s#listen = 127.0.0.1:9000#listen = $instdir/var/run/php-fpm.sock#g" \
-        | sed "s#;listen.owner = www-data#listen.owner = www-data#g" \
-        | sed "s#;listen.group = www-data#listen.group = www-data#g" \
-        > "$etcdir/php-fpm.d/$(basename $i | sed 's/.default//')"
-done
+        cat "$i" \
+            | sed "s#listen = 127.0.0.1:9000#listen = $instdir/var/run/php-fpm.sock#g" \
+            | sed "s#;listen.owner = www-data#listen.owner = www-data#g" \
+            | sed "s#;listen.group = www-data#listen.group = www-data#g" \
+            > "$etcdir/php-fpm.d/$(basename $i | sed 's/.default//')"
+    done
+fi
 
 chown -R www-data:www-data $instdir/var
 
