@@ -21,6 +21,13 @@ instdir="$instbasedir/php-$version"
 #directory where config are setup
 etcdir="/etc/php/$version/fpm"
 
+if [ ! -f "$instdir/php-fpm.conf.default" ]; then
+	echo -e "\nThere are not a php-fpm.conf.default available to version $version"
+	echo -e "\nInstallation aborted\n"
+
+	exit 1
+fi
+
 if [ ! -d "$etcdir" ]; then
     install -d "$etcdir"
 fi
@@ -49,7 +56,11 @@ if [ -d "$instdir/etc/php-fpm.d" ]; then
     done
 fi
 
-chown -R www-data:www-data $instdir/var
+if [ ! -d "$instdir/var" ]; then
+	install -d "$instdir/var"
+fi
+
+chown -R www-data:www-data "$instdir/var"
 
 echo -e "\nInstalling php.ini in $etcdir/"
 
