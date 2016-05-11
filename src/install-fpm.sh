@@ -21,11 +21,11 @@ instdir="$instbasedir/php-$version"
 #directory where config are setup
 etcdir="/etc/php/$version/fpm"
 
-if [ ! -f "$instdir/php-fpm.conf.default" ]; then
-	echo -e "\nThere are not a php-fpm.conf.default available to version $version"
-	echo -e "\nInstallation aborted\n"
+if [ ! -f "$instdir/etc/php-fpm.conf.default" ]; then
+    echo -e "\nThere are not a $instdir/etc/php-fpm.conf.default available to version $version"
+    echo -e "\nInstallation aborted\n"
 
-	exit 1
+    exit 1
 fi
 
 if [ ! -d "$etcdir" ]; then
@@ -38,26 +38,29 @@ fi
 
 echo -e "\nCopy $instdir/php-fpm.conf.default file to $etcdir/php-fpm.conf"
 
-cat "$instdir/etc/php-fpm.conf.default" \
+replacements='
+    sed "s#;include=etc#include=$etcdir#" \
     | sed "s#$instdir/etc#$etcdir#" \
     | sed "s#;pid = run/php-fpm.pid#pid = $instdir/var/run/php-fpm.pid#" \
     | sed "s#;error_log = log/php-fpm.log#error_log = $instdir/var/log/php-fpm.log#" \
-    > "$etcdir/php-fpm.conf"
+    | sed "s#;syslog.ident = php-fpm#syslog.ident = php-fpm-$version#" \
+    | sed "s#listen = 127.0.0.1:9000#listen = $instdir/var/run/php-fpm.sock#g" \
+    | sed "s#;listen.owner = www-data#listen.owner = www-data#g" \
+    | sed "s#;listen.group = www-data#listen.group = www-data#g" \
+'
+
+cat "$instdir/etc/php-fpm.conf.default" | eval "$replacements" > "$etcdir/php-fpm.conf"
 
 if [ -d "$instdir/etc/php-fpm.d" ]; then
     for i in $(ls "$instdir/etc/php-fpm.d/"*.default); do
         echo -e "\nCopy $i file to $etcdir/php-fpm.d/"
 
-        cat "$i" \
-            | sed "s#listen = 127.0.0.1:9000#listen = $instdir/var/run/php-fpm.sock#g" \
-            | sed "s#;listen.owner = www-data#listen.owner = www-data#g" \
-            | sed "s#;listen.group = www-data#listen.group = www-data#g" \
-            > "$etcdir/php-fpm.d/$(basename $i | sed 's/.default//')"
+        cat "$i" | eval "$replacements" > "$etcdir/php-fpm.d/$(basename $i | sed 's/.default//')"
     done
 fi
 
 if [ ! -d "$instdir/var" ]; then
-	install -d "$instdir/var"
+    install -d "$instdir/var"
 fi
 
 chown -R www-data:www-data "$instdir/var"
