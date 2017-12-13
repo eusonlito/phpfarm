@@ -30,8 +30,20 @@ Discover Last PHP version
 will returns:
 
 ```
-Last version from PHP releases website is 5.6.19 - Install it? [y/n]
+Last version from PHP releases website is 5.6.31 - Install it? [y/n]
 ```
+
+Confirmation can be ignored using `-f` option:
+- `./compile-last.sh -f 5.6`
+
+Last complete version can also be shown using `-s` option:
+- `./compile-last.sh -s 5.6`
+will returns:
+```
+5.6.31
+```
+Warning: In that case, php will not be compiled.
+
 
 Customization
 -------------
